@@ -1,0 +1,168 @@
+extends ../../layout
+
+block link
+  link(rel="stylesheet", href="/css/pages/auth/login.css")
+block body
+  if user
+    body(onload="isload();")
+  else
+    body
+      .shap
+      .container.c-d
+        .login-main.c-n-n(style="width: 85%")
+          form.login(
+            action="/auth/login",
+            method="POST",
+            style="height: 400px"
+          )
+            .c-d
+              h1 Đăng nhập
+              div
+                input(
+                  type="text",
+                  name="username",
+                  placeholder="Email hoặc tên đăng nhập",
+                  required,
+                  style="width: 100%"
+                )
+                input(
+                  type="password",
+                  name="password",
+                  minlength="6",
+                  placeholder="Mật khẩu",
+                  required,
+                  style="width: 100%"
+                )
+            .c-ng.mtb15(style="margin-left: 40px")
+              input#remember.checkbox(
+                type="checkbox",
+                name="remember",
+                onclick="setCookie()"
+              ) 
+              label(for="remember", style="margin-left: 5px") Nhớ mật khẩu
+            .c-d
+              input(type="submit", value="Đăng nhập")
+          .c-d(style="height: 50px; margin-top: 15%")
+            h2 Hoặc
+            p Nếu chưa có
+            p tài khoản
+          form.register(action="/auth/register", method="POST")
+            .c-d
+              h1 Đăng ký
+              input(
+                type="text",
+                name="username",
+                required,
+                placeholder="Tên đăng nhập",
+                value=""
+              )
+              .c-ng(style="width: 80%")
+                input.mr10(
+                  type="password",
+                  name="password",
+                  required,
+                  minlength="6",
+                  placeholder="Tạo mật khẩu ít nhất 6 ký tự",
+                  value="",
+                  style="width: 50%"
+                )
+                input(
+                  type="password",
+                  name="cpassword",
+                  required,
+                  minlength="6",
+                  placeholder="Nhập lại mật khẩu",
+                  value="",
+                  style="width: 48%"
+                )
+
+              input(
+                type="text",
+                name="fullname",
+                required,
+                placeholder="Họ và tên",
+                value=""
+              )
+
+              input(
+                type="email",
+                name="email",
+                placeholder="Email (Nếu có)",
+                value=""
+              )
+              input(
+                type="text",
+                name="phone",
+                required,
+                placeholder="Số điện thoại",
+                value=""
+              )
+
+              input(
+                type="text",
+                name="address",
+                placeholder="Địa chỉ",
+                value=""
+              )
+            div(style="margin-left: 50px")
+              span Giới tính:
+              span.mlr10
+                input#boy(type="radio", name="sex", value="Nam", checked)
+                label(for="boy") Nam
+              span
+                input#girl(type="radio", name="sex", value="Nữ") 
+                label(for="girl") Nữ
+              span.mlr10
+                input#not(type="radio", name="sex", value="Khác") 
+                label(for="not") Khác
+              .ng.mtb10
+                input#yes.mr10(type="checkbox", name="yes", checked) 
+                label(for="yes") Tôi đồng ý với điều khoản và dịch vụ của OTBOOKING
+            .c-d
+              input.bntsm(type="submit", value="Đăng ký")
+
+block script
+  script(type="text/javascript").
+    function isload() {
+      window.location.href = "/";
+    }
+
+    // remember me
+    function setCookie() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      document.cookie = "username=" + username + ";";
+      document.cookie = "password=" + password + ";";
+    }
+
+    function getCookiedata() {
+      const username = getCookie("username");
+      const password = getCookie("password");
+
+      if (username != "" && password != "") {
+        document.getElementById("username").value = username;
+        document.getElementById("password").value = password;
+        document.getElementById("remember").checked = true;
+      } else {
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("remember").checked = false;
+      }
+    }
+
+    // jonin cookie and get data
+    function getCookie(name) {
+      const name = name + "=";
+      const ca = document.cookie.split(";");
+      for (const i = 0; i < ca.length; i++) {
+        const c = ca[i];
+        while (c.charAt(0) == " ") {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+    getCookiedata();

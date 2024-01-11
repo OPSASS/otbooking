@@ -1,0 +1,139 @@
+extends ../../layout
+
+block link
+  link(rel="stylesheet", href="/css/pages/user/profile.css")
+  link(
+    rel="stylesheet",
+    href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"
+  )
+block body
+  if user.id == users.id
+    - const POST = process.env.PUBLIC_FOLDER + "images/";
+      .container(style="position: relative")
+        .link.font5(style="margin-bottom: 20px")
+          a(href="/") Trang chủ
+          p >&nbsp
+          p Trang cá nhân
+        form.profile(
+          action="/profile/" + users._id + "/edit?_method=PUT",
+          method="post"
+        )
+          h3.mtb10 Thông tin cá nhân
+          .profile-main.ngang
+            .avt.mtb10
+              img(src="/img/no-avt.png", alt="avt")
+            div(style="margin: 20px 50px")
+              div
+                .ngang
+                  p.mr10 Tên người dùng:
+                  #edit.ngang
+                    h4= users.fullname
+                    p.edit(onclick="editName()") Chỉnh sửa
+                  input#fullname(
+                    type="text",
+                    name="fullname",
+                    value=users.fullname,
+                    placeholder="Nhập họ và tên",
+                    required
+                  )
+                .ngang.mtb5
+                  p.mr10 Giới tính:
+                  b= users.sex
+
+              h4.mtb10 Thông tin liên hệ
+              div
+                .ngang
+                  p.mr10 Số điện thoại:
+                  #edit1.ngang
+                    b= users.phone
+                    p.edit(onclick="editPhone()") Chỉnh sửa
+                  input#phone(
+                    type="text",
+                    name="phone",
+                    value=users.phone,
+                    placeholder="Nhập số điện thoại",
+                    required
+                  )
+                .ngang.mtb5
+                  p.mr10 Địa chỉ:
+                  #edit2.ngang
+                    b= users.address
+                    p.edit(onclick="editAddr()") Chỉnh sửa
+                  input#address(
+                    type="text",
+                    name="address",
+                    value=users.address,
+                    placeholder="Nhập địa chỉ cụ thể",
+                    required
+                  )
+              input#sm(type="submit", value="Cập nhật")
+
+          h3.mtb10 Đổi mật khẩu
+          .ngang
+            input.mr10(
+              type="password",
+              name="oldPassword",
+              placeholder="Mật khẩu cũ"
+            )
+            input.mr10(
+              type="password",
+              name="newPassword",
+              placeholder="Mật khẩu mới"
+            )
+            input(type="submit", value="Đổi mật khẩu")
+
+          h3.mtb10 Xóa tài khoản
+        form#deleteUs(
+          action="/profile/" + users.id + "/delete?_method=DELETE",
+          method="post"
+        )
+          label.delete.bong.ngang.an(for="delete", onclick="ConfirmDialog()")
+            .bx.bx-trash
+            p Xóa tài khoản của bạn
+
+  else
+    div(style="width: 100%; height: 39.5%")
+      .giuadoc(style="margin-top: 20%")
+        h1 Bạn không có quyền truy cập vào trang này!
+        a.mtb10(href="/") Trở về trang chủ
+block script
+  script(src="/js/dropclick.js")
+  script(
+    src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"
+  )
+  script(type="text/javascript").
+    const name = document.getElementById("fullname");
+    const phone = document.getElementById("phone");
+    const addr = document.getElementById("address");
+    const sm = document.getElementById("sm");
+    const edit = document.getElementById("edit");
+    const edit1 = document.getElementById("edit1");
+    const edit2 = document.getElementById("edit2");
+    const dele = document.getElementById("deleteUs");
+
+    const editName = () => {
+      name.style.display = "block";
+      sm.style.display = "block";
+      edit.style.display = "none";
+    };
+    const editPhone = () => {
+      phone.style.display = "block";
+      sm.style.display = "block";
+      edit1.style.display = "none";
+    };
+    const editAddr = () => {
+      addr.style.display = "block";
+      sm.style.display = "block";
+      edit2.style.display = "none";
+    };
+
+    const ConfirmDialog = () => {
+      swal({ title: "Xóa Tài khoản?", text: "Bạn chắc chắn muốn xóa tài khoản của mình?", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Tiếp tục xóa!", cancelButtonText: "Quay lại!", closeOnConfirm: false, closeOnCancel: false }, function (isConfirm) {
+        if (isConfirm) {
+          swal("Đã xóa thành công!", "Bạn sẽ trở về trang Đăng nhập sau 5s", "success");
+          dele.submit();
+        } else {
+          swal("Hủy", "Đã hủy thao tác!", "error");
+        }
+      });
+    };

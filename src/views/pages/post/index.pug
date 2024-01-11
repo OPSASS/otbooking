@@ -1,0 +1,62 @@
+extends ../../layout
+
+block link
+  link(rel="stylesheet", href="/css/pages/post/post.css")
+  link(
+    rel="stylesheet",
+    href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"
+  )
+block body
+  - const POST = process.env.PUBLIC_FOLDER + "images/";
+  each post in posts
+    .container
+      iframe(width="100%", height="576", src=post.trailer, allowfullscreen)
+
+      h2(style="margin: 25px 0") Nội dung phim
+
+      .c-n
+        img.img-post(
+          src=POST + post.files[0].fileName,
+          alt=post.files[0].fileName
+        )
+        div(style="margin: 0 25px")
+          h1= post.name
+          if user
+            if user.isAdmin == true
+              .c-ng
+                a.edit.c-ng(
+                  href="/movie/" + post.id + "/edit",
+                  style="margin-right: 10px"
+                ) Sửa
+
+                form#delete(
+                  action="/movie/" + post.id + "/delete" + "?_method=DELETE",
+                  method="POST"
+                )
+                  label.delete(
+                    for="delete",
+                    onclick="ConfirmDialog()",
+                    style="color: red"
+                  ) Xóa
+          .c-n.mtb15
+            h2(style="color: var(--defaultColor2)")= post.price
+            p đ/vé
+          p= post.desc
+          input(type="submit", value="ĐẶT VÉ")
+
+block script
+  script(src="/js/dropclick.js")
+  script(
+    src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"
+  )
+  script(type="text/javascript").
+    function ConfirmDialog() {
+      swal({ title: "Xóa phim?", text: "Bạn chắc chắn muốn xóa phim này?", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Tiếp tục xóa!", cancelButtonText: "Quay lại!", closeOnConfirm: false, closeOnCancel: false }, function (isConfirm) {
+        if (isConfirm) {
+          swal("Đã xóa thành công!", "Phim đã được xóa.", "success");
+          document.getElementById("delete").submit();
+        } else {
+          swal("Hủy", "Phim đã được dữ lại!", "error");
+        }
+      });
+    }

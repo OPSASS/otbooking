@@ -1,0 +1,43 @@
+extends ../../layout
+
+block link
+  link(rel="stylesheet", href="/css/pages/home/home.css")
+
+block body
+  - const POST = process.env.PUBLIC_FOLDER + "images/";
+    body
+      .body-main.container
+        h2.mtb15 Đang công chiếu
+        .o6xn
+          each post in posts
+            if post.status == "Đang công chiếu"
+              a.post(href="/movie/" + post.slug)
+                img.post-img(
+                  src=POST + post.files[0].fileName,
+                  alt=post.files[0].fileName
+                )
+                h4.mtb15= post.name
+
+        h2.mtb15 Phim trong tuần
+        .o6xn
+          each post in posts
+            if post.status == "Đang công chiếu"
+              a.post(href="/movie/" + post.slug)
+                img.post-img(
+                  src=POST + post.files[0].fileName,
+                  alt=post.files[0].fileName
+                )
+                h4.mtb15= post.name
+        h2.mtb15 Sắp ra rạp
+        .o6xn
+          each post in posts
+            if post.status == "Sắp ra rạp"
+              a.post(href="/movie/" + post.slug)
+                img.post-img(
+                  src=POST + post.files[0].fileName,
+                  alt=post.files[0].fileName
+                )
+                h4.mtb15= post.name
+
+block script
+  script(type="text/javascript").

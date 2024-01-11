@@ -1,0 +1,108 @@
+extends ../../layout
+
+block link
+  link(rel="stylesheet", href="/css/pages/upload/upload.css")
+
+block body
+  body
+    if user.isAdmin == true
+      form(
+        action="/movie/" + post.id + "/edit?_method=PUT",
+        method="post",
+        name="formPost",
+        style="padding: 100px 60px"
+      )
+        h3 Thể loại:
+        .type
+          input#t1(type="radio", name="type", value="Hành Động", required)
+          label(for="t1") Hành Động
+          input#t2(type="radio", name="type", value="Phiêu Lưu", required)
+          label(for="t2") Phiêu Lưu
+          input#t3(type="radio", name="type", value="Kinh Dị", required)
+          label(for="t3") Kinh Dị
+          input#t4(type="radio", name="type", value="Hoạt Hình", required)
+          label(for="t4") Hoạt Hình
+          input#t5(
+            type="radio",
+            name="type",
+            value="Khoa học viễn tưởng",
+            required
+          )
+          label(for="t5") Khoa học viễn tưởng
+          input#t6(type="radio", name="type", value="Khác", required)
+          label(for="t6") Khác
+
+        h3 Thông tin chung:
+        div
+          input(
+            type="text",
+            name="name",
+            placeholder="Tên phim",
+            required,
+            value=post.name
+          )
+          input.mlr10(
+            type="number",
+            name="time",
+            placeholder="Thời lượng",
+            required,
+            value=post.time
+          )
+          input(
+            type="date",
+            name="day",
+            placeholder="Ngày phát hành",
+            required,
+            value=post.day
+          )
+        h3 Mô tả:
+        div
+          textarea(
+            name="desc",
+            cols="30",
+            rows="10",
+            placeholder="Nhập mô tả cho sản phẩm"
+          )= post.desc
+
+        h3 Giá vé:
+        div
+          input#p1(type="radio", name="price", value="95.000", required)
+          label(for="p1") 95.000
+          input#p2(type="radio", name="price", value="125.000", required)
+          label(for="p2") 125.000
+
+        h3 Trạng thái:
+        div
+          input#s1(
+            type="radio",
+            name="status",
+            value="Đang công chiếu",
+            required
+          )
+          label(for="s1") Đang công chiếu
+
+          input#s2(type="radio", name="status", value="Sắp ra rạp", required)
+          label(for="s2") Sắp ra rạp
+
+        h3 Hình ảnh phim:
+        div
+          input(type="file", name="files", accept=".jpg,.jpeg,.png", required)
+
+        h3 Trailer (nếu có):
+        div
+          input(
+            type="url",
+            name="trailer",
+            value=post.trailer,
+            placeholder="Mã nhúng trên Youtube: https://www.youtube.com/embed/{chuỗi sau watch?v=}...",
+            style="width: 100%; padding: 10px"
+          )
+
+        .c-d
+          input(type="submit", value="Sửa film")
+    else
+      div(style="width: 100%; height: 39.5%")
+        .giuadoc(style="margin-top: 20%")
+          h1 Bạn không có quyền truy cập vào trang này!
+          a.mtb10(href="/") Trở về trang chủ
+block script

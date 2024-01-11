@@ -1,0 +1,79 @@
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title #{ title } - OTBOOKING
+    block link
+    link(rel="stylesheet", href="/css/layout.css")
+    link(
+      href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css",
+      rel="stylesheet"
+    )
+
+    link(rel="icon", href="/img/logo.ico")
+
+  block nav
+    nav.container.c-ng.c-n-n
+      a(href="/")
+        img(src="/img/logofull.png", alt="logo", style="width: 225px")
+      .nav-r.c-ng
+        if user
+          if user.isAdmin
+            if title == "Thêm phim"
+              a.page.active(href="/movie/add") Thêm phim
+            else
+              a.page(href="/movie/add") Thêm phim
+        if title == "Trang chủ"
+          a.page.active(href="/") Home
+          a.page(href="/") Rạp
+          a.page(href="/") Tin tức
+        else if title == "Rạp"
+          a.page(href="/") Home
+          a.page.active(href="/") Rạp
+          a.page(href="/") Tin tức
+        else if title == "Tin tức"
+          a.page(href="/") Home
+          a.page(href="/") Rạp
+          a.page.active(href="/") Tin tức
+        else
+          a.page(href="/") Home
+          a.page(href="/") Rạp
+          a.page(href="/") Tin tức
+        if user
+          h4.mlr10(style="color: var(--defaultColor2)")= user.fullname
+        if user
+          a.auth(href="/auth/logout") Logout
+        else
+          a.auth(href="/auth/login") Login
+
+  block body
+  block footer
+    footer
+      if title == "Trang chủ"
+        .intro.container
+          .intro-main.bong
+            .popcorn-pic.c-n
+              img(
+                src="/img/icon-popcorn-bucket.png",
+                alt="bucker",
+                style="height: 240px"
+              )
+              img.popcorn(src="/img/icon-popcorn-01.png", alt="popcorn")
+            .intro-right
+              h1 OTBOOKING là gì?
+              p OTBOOKING là một trang web, giúp bạn dễ dàng đặt vé xem phim đang chiếu tại các rạp gần vị trí của bạn. Mua vé nhanh nhất, phim mới nhất và các bộ phim hot ra mắt trong tuần, cùng với các sự kiện khuyến mãi tại rạp.
+      .footer-bottom.c-d
+        .c-n
+          a(href="/") Privacy Policy
+          hr 
+          a(href="/") Terms of Use
+          hr 
+          a(href="/") Promo Terms
+          hr 
+          a(href="/") About Ads
+        a.mtb15(href="/", style="font-size: 12px") Do Not Sell My Personal Information
+        p(style="font-size: 12px") © 2023 OTBBOOKING, LLC. OTBBOOKING, the OTBBOOKING circular logo, and YOUR TICKET TO MORE are registered trademarks of OTBBOOKING, LLC. All Rights Reserved.
+  script(src="/js/dropclick.js")
+
+  block script

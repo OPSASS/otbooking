@@ -1,0 +1,57 @@
+.shap {
+  position: absolute;
+  top: 68px;
+  left: 0;
+  right: 0;
+  height: 50%;
+  z-index: -1;
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(199, 215, 247),
+    var(--defaultColor)
+  );
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
+}
+
+.login-main {
+  padding: 50px 0;
+}
+
+.login {
+  width: 38%;
+  height: auto;
+  padding: 15px;
+  background-color: var(--bgColor);
+  border-radius: 10px;
+}
+
+.register {
+  width: 45%;
+  height: auto;
+  padding: 25px 10px;
+  background-color: var(--bgColor);
+  border-radius: 10px;
+}
+
+h1 {
+  padding: 20px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 80%;
+}
+
+input[type="submit"] {
+  padding: 10px 15px;
+  margin-top: 15px;
+  /* background-color: var(--defaultColor2); */
+  cursor: pointer;
+}
+input[type="submit"]:hover {
+  background-color: var(--defaultColor2);
+  color: var(--whiteColor);
+}
